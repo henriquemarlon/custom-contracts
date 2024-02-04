@@ -108,7 +108,7 @@ graph TD
 
 To deploy these contracts on other networks not yet supported or on a localhost network, follow the commands below.
 
-#### Generate the .env file and install the project dependencies contained in the `.gitmodules` file:
+#### Generate the `.env` file and install the project dependencies contained in the `.gitmodules` file:
 
 ```bash
 make setup
