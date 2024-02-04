@@ -1,66 +1,137 @@
-## Foundry
+# Contracts
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This contracts section found here aim to onchain represent the assets and some actions that can be performed based on the logic contained within the backend of the Cartesi application through the voucher API when internally invoked.
 
-Foundry consists of:
+> [!IMPORTANT]
+> To interact with this project snippet, it is necessary to install Foundry, a toolkit for Ethereum application development, follow the instructions provided [here](https://getfoundry.sh/). Additionally, it is necessary to have the "make" binary configured on your machine. Disclaimer: all actions described here were performed on an Ubuntu-based distribution.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## 1. General Architechture:
 
-## Documentation
 
-https://book.getfoundry.sh/
+The general interaction architecture among the contracts presented here with other parts of the system features a layer of contracts representing assets/tokens, which will later serve as objects for system interaction. Additionally, within this layer of contracts, there is an implementation of the proxy pattern that allows the application contract to deploy other contracts, acting as a factory. The actions schematized from the frontend directly with assets mostly involve calling the approve(address,uint256) function of the assets by the user to the portals of the CRF, i.e., [Cartesi Rollups Framework](https://docs.cartesi.io/cartesi-rollups/).
+```mermaid
+graph TD
+    classDef core fill:#ffe95a,color:#000
+    classDef master fill: #7AF8FA,color:#000
+    classDef external fill:#85b4ff,color:#000
 
-## Usage
+    ERC721:::core
+    ERC1155:::core
+    DeployerPlugin:::core
+    Application:::external
+    CRF[Cartesi Rollups Framework]:::master
+    Frontend:::external
+    
+    Frontend --> CRF
+    CRF --> Application
 
-### Build
-
-```shell
-$ forge build
+    Frontend --> DeployerPlugin
+    Frontend --> ERC721Der
+    Frontend --> ERC1155
+    
+    Application --> ERC721
+    Application --> ERC1155
+    Application --> DeployerPlugin
 ```
 
-### Test
+## 2. How the DeployerPlugin.sol works:
 
-```shell
-$ forge test
+This plugin allows your DApp to act as a factory, creating new contracts based on their respective bytecodes. In the scope presented here, this function is invoked during the execution of a DApp voucher.
+
+```mermaid
+graph TD
+    classDef core fill:#ffe95a,color:#000
+    classDef external fill:#85b4ff,color:#000
+    classDef master fill: #7AF8FA,color:#000
+
+    Application:::master
+    AnyContract:::core
+    DeployerPlugin:::external
+
+    Application -- deployAnyContract --> DeployerPlugin
+    DeployerPlugin -- deploy --> AnyContract
 ```
 
-### Format
+## 3. Vouchers X Assets:
 
-```shell
-$ forge fmt
+The Cartesi DApps deployed on the networks supported by this application can, through user interactions using vouchers, handle the most commonly used patterns of assets supported by the CRF portals, i.e., [Cartesi Rollups Framework](https://docs.cartesi.io/cartesi-rollups/).
+
+### - Interacting w/ ERC20:
+
+```mermaid
+graph TD
+    classDef core fill:#ffe95a,color:#000
+    classDef external fill:#85b4ff,color:#000
+
+    Anyone:::core
+    ERC20:::external
+
+    ERC20 -- mint --> Anyone
+    Anyone -- approve --> ERC20
+    ERC20 -- ... --> Anyone
 ```
 
-### Gas Snapshots
+### - Interacting w/ ERC721:
 
-```shell
-$ forge snapshot
+```mermaid
+graph TD
+    classDef core fill:#ffe95a,color:#000
+    classDef external fill:#85b4ff,color:#000
+
+    Anyone:::core
+    ERC721:::external
+
+    ERC721 -- safeMint --> Anyone
+    Anyone -- approve --> ERC721
+    ERC721 -- ... --> Anyone
 ```
 
-### Anvil
+### - Interacting w/ ERC1155:
 
-```shell
-$ anvil
+```mermaid
+graph TD
+    classDef core fill:#ffe95a,color:#000
+    classDef external fill:#85b4ff,color:#000
+
+    Anyone:::core
+    ERC1155:::external
+
+    ERC1155 -- mint --> Anyone
+    Anyone -- approve --> ERC1155
+    ERC1155 -- ... --> Anyone
 ```
 
-### Deploy
+## 3. How to run:
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+To deploy these contracts on other networks not yet supported or on a localhost network, follow the commands below. For better interaction, enter the workspace within the "contracts" folder.
+
+#### Generate the .env file and install the project dependencies contained in the `.gitmodules` file:
+
+```bash
+make setup
 ```
 
-### Cast
-
-```shell
-$ cast <subcommand>
+#### Execute the tests:
+```bash
+make test
 ```
 
-### Help
+> [!IMPORTANT]
+> Before running the command below, confirm that the `.env` file contains all the necessary variables for deployment. For deploying on a local network, add the following values to the variables:
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+```env
+RPC_URL="http://localhost:8545"
+NETWORK="localhost"
+PRIVATE_KEY="0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80" // You can use any private key from the local environment here.
+TESTNET_BLOCKSCAN_API_KEY=""
+```
+
+#### Deploy the contracts:
+```bash
+make deploy
+```
+
+#### Check the new state of contracts after the voucher executions:
+```bash
+make new_state
 ```
