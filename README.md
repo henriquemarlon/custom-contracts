@@ -15,6 +15,7 @@ graph TD
     classDef master fill: #7AF8FA,color:#000
     classDef external fill:#85b4ff,color:#000
 
+    ERC20:::core
     ERC721:::core
     ERC1155:::core
     DeployerPlugin:::core
@@ -26,9 +27,11 @@ graph TD
     CRF --> Application
 
     Frontend --> DeployerPlugin
-    Frontend --> ERC721Der
+    Frontend --> ERC20
+    Frontend --> ERC721
     Frontend --> ERC1155
-    
+
+    Application --> ERC20
     Application --> ERC721
     Application --> ERC1155
     Application --> DeployerPlugin
