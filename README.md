@@ -125,7 +125,8 @@ make test
 ```env
 RPC_URL="http://localhost:8545"
 NETWORK="localhost"
-PRIVATE_KEY="0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80" // You can use any private key from the local environment here.
+PRIVATE_KEY="0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80" // You can use any private key from 
+the local environment here.
 TESTNET_BLOCKSCAN_API_KEY=""
 ```
 
