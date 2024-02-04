@@ -106,7 +106,7 @@ graph TD
 
 ## 3. How to run:
 
-To deploy these contracts on other networks not yet supported or on a localhost network, follow the commands below. For better interaction, enter the workspace within the "contracts" folder.
+To deploy these contracts on other networks not yet supported or on a localhost network, follow the commands below.
 
 #### Generate the .env file and install the project dependencies contained in the `.gitmodules` file:
 
