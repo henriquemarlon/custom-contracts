@@ -1,3 +1,20 @@
+<div align="center">
+    <img src="https://github.com/Mugen-Builders/.github/assets/153661799/7ed08d4c-89f4-4bde-a635-0b332affbd5d" width="150" height="150">
+</div>
+<br>
+<div align="center">
+    <i>A collection of smart contracts for interacting with the Cartesi Rollupś.</i>
+</div>
+<div align="center">
+This repository aims to have assets and plugins that can primarily be called through vouchers.
+</div>
+<br>
+<div align="center">
+    
+  <a href="">[![Static Badge](https://img.shields.io/badge/cartesi--rollups-1.0.0-5bd1d7)](https://docs.cartesi.io/cartesi-rollups/)</a>
+  <a href="">[![Static Badge](https://img.shields.io/badge/foundry-0.2.0-red)](https://book.getfoundry.sh/getting-started/installation)</a>
+</div>
+
 # Contracts
 
 This contracts section found here aim to onchain represent the assets and some actions that can be performed based on the logic contained within the backend of the Cartesi application through the voucher API when internally invoked.
