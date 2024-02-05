@@ -6,7 +6,7 @@
     <i>A collection of smart contracts for interacting with the Cartesi Rollupś.</i>
 </div>
 <div align="center">
-This repository aims to have assets and extensions that can primarily be called through vouchers.
+This repository aims to have assets and extensions that can interact with Cartesi Rollups.
 </div>
 <br>
 <div align="center">
