@@ -1,6 +1,6 @@
 -include .env
 
-.PHONY: vouchers deploy env test
+.PHONY: new_state deploy env test vrf consumer executed_vouchers
 
 info: header
 
@@ -21,19 +21,26 @@ export HEADER
 START_LOG = @echo "======================================================= START OF LOG ========================================================="
 END_LOG = @echo "======================================================== END OF LOG =========================================================="
 
-ifeq ($(NETWORK), "localhost")
-  EXECUTED_VOUCHERS := script/ExecutedVouchers.s.sol --rpc-url $(RPC_URL) --private-key $(PRIVATE_KEY) --broadcast -v
-	DEPLOY_NETWORK_ARGS := script/DeployContracts.s.sol --rpc-url $(RPC_URL) --private-key $(PRIVATE_KEY) --broadcast -v
-else
-	RPC_URL := $(RPC_URL)
-	PRIVATE_KEY := $(PRIVATE_KEY)
-	EXECUTED_VOUCHERS := script/ExecutedVouchers.s.sol --rpc-url $(RPC_URL) --private-key $(PRIVATE_KEY) --broadcast --verify --etherscan-api-key $(TESTNET_BLOCKSCAN_API_KEY) -v
-	DEPLOY_NETWORK_ARGS := script/DeployContracts.s.sol --rpc-url $(RPC_URL) --private-key $(PRIVATE_KEY) --broadcast --verify --etherscan-api-key $(TESTNET_BLOCKSCAN_API_KEY) -v
-endif
+EXECUTED_VOUCHERS := script/ExecutedVouchers.s.sol --rpc-url $(RPC_URL) --private-key $(PRIVATE_KEY) --broadcast -v
+DEPLOY_NETWORK_ARGS := script/DeployContracts.s.sol --rpc-url $(RPC_URL) --private-key $(PRIVATE_KEY) --broadcast -v
+DEPLOY_COORDINATOR_VRF_ARGS := script/DeployVRFCoordinatorV2Mock.s.sol --rpc-url $(RPC_URL) --private-key $(PRIVATE_KEY) --broadcast -v >> vrf.txt
+DEPLOY_CONSUMER_ARGS := script/DeployVRFConsumer.s.sol --rpc-url $(RPC_URL) --private-key $(PRIVATE_KEY) --broadcast -v > consumer.txt
 
 define test_contracts
 	$(START_LOG)
 	@forge test
+	$(END_LOG)
+endef
+
+define vrf
+	$(START_LOG)
+	@forge script $(DEPLOY_COORDINATOR_VRF_ARGS)
+	$(END_LOG)
+endef
+
+define consumer
+	$(START_LOG)
+	@forge script $(DEPLOY_CONSUMER_ARGS)
 	$(END_LOG)
 endef
 
@@ -64,3 +71,11 @@ new_state:
 deploy:
 	@echo "$$HEADER"
 	@$(deploy_contracts)
+
+vrf:
+	@echo "$$HEADER"
+	@$(vrf)
+
+consumer:
+	@echo "$$HEADER"
+	@$(consumer)

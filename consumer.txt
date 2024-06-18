@@ -1,0 +1,74 @@
+Compiling 1 files with 0.8.23
+Solc 0.8.23 finished in 1.33s
+Compiler run successful!
+EIP-3855 is not supported in one or more of the RPCs used.
+Unsupported Chain IDs: 31337.
+Contracts deployed with a Solidity version equal or higher than 0.8.20 might not work properly.
+For more information, please see https://eips.ethereum.org/EIPS/eip-3855
+Script ran successfully.
+
+== Logs ==
+  VRFConsumer address: 0xa82fF9aFd8f496c3d6ac40E2a0F282E47488CFc9 at network: 31337
+  RandomWords available: 7290387335634266486249037663595860854047133815481999773725367799777733655939 56988696150268759067033853745049141362335364605175666696514897554729450063371
+  Result of sendRandomness():
+  0x53917dc4e0b59a96a5e997a15da59b6b0f40b641f595e95214b0f1943ab86098
+
+## Setting up 1 EVM.
+
+==========================
+
+Chain 31337
+
+Estimated gas price: 0.562367778 gwei
+
+Estimated total gas used for script: 1056190
+
+Estimated amount required: 0.00059396722344582 ETH
+
+==========================
+##
+Sending transactions [0 - 4].
+##
+Waiting for receipts.
+
+##### anvil-hardhat
+✅  [Success]Hash: 0x75f46887c94f1ec3c1955a7d2fa8dae3b5408a3a3eefceea8f88a4ee4920f438
+Contract Address: 0xa82fF9aFd8f496c3d6ac40E2a0F282E47488CFc9
+Block: 11
+Paid: 0.000122875672389666 ETH (436994 gas * 0.281183889 gwei)
+
+
+##### anvil-hardhat
+✅  [Success]Hash: 0x79fe98d9232235e9a7f2dbf034d2061ef19e0e31f0608545d34ab4ac0c722c74
+Block: 12
+Paid: 0.000014437931567613 ETH (58439 gas * 0.247059867 gwei)
+
+
+##### anvil-hardhat
+✅  [Success]Hash: 0xdaf30080b94e7e38101166977845bfcfd00852df68d83d5a98acca63a0a543ec
+Block: 13
+Paid: 0.0000223113240527 ETH (103151 gas * 0.2162977 gwei)
+
+
+##### anvil-hardhat
+✅  [Success]Hash: 0xb785b640ee6a92f8d3a3bee013943601f9597c29c055ec6b19ce631a5eab3ec8
+Block: 14
+Paid: 0.000020431038179936 ETH (107846 gas * 0.189446416 gwei)
+
+
+##### anvil-hardhat
+✅  [Success]Hash: 0xb67236c1857b221069860357ab82d9b638c752a5127f5ee2f3c99d48b31c1bd0
+Block: 14
+Paid: 0.000015038067055664 ETH (79379 gas * 0.189446416 gwei)
+
+
+
+==========================
+
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+Total Paid: 0.000195094033245579 ETH (785809 gas * avg 0.224686857 gwei)
+
+Transactions saved to: /home/henriquemarlon/SecondDisk/Projects/cartesi/custom-contracts/broadcast/DeployVRFConsumer.s.sol/31337/run-latest.json
+
+Sensitive values saved to: /home/henriquemarlon/SecondDisk/Projects/cartesi/custom-contracts/cache/DeployVRFConsumer.s.sol/31337/run-latest.json
+
